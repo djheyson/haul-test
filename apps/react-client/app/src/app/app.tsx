@@ -1,50 +1,29 @@
-import NxWelcome from './nx-welcome';
+import { AppProvider } from '@toolpad/core/react-router-dom';
+import { Outlet } from 'react-router-dom';
+import type { Navigation } from '@toolpad/core';
 
-import { Route, Routes, Link } from 'react-router-dom';
+import HomeIcon from '@mui/icons-material/Home';
+import LocalShippingIcon from '@mui/icons-material/LocalShipping';
+import InfoIcon from '@mui/icons-material/Info';
+import logo from '../assets/logo.jpg';
 
-export function App() {
+const NAVIGATION: Navigation = [
+  { kind: 'header', title: 'Main items' },
+  { segment: '', title: 'Home', icon: <HomeIcon /> },
+  { segment: 'inspections', title: 'Inspections', icon: <LocalShippingIcon /> },
+  { segment: 'about', title: 'About', icon: <InfoIcon /> },
+];
+
+const BRANDING = {
+  title: 'Haul',
+  homeUrl: '/',
+  logo: <img src={logo} alt="Haul" />,
+};
+
+export default function App() {
   return (
-    <div>
-      <NxWelcome title="react-client" />
-
-      {/* START: routes */}
-      {/* These routes and navigation have been generated for you */}
-      {/* Feel free to move and update them to fit your needs */}
-      <br />
-      <hr />
-      <br />
-      <div role="navigation">
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/page-2">Page 2</Link>
-          </li>
-        </ul>
-      </div>
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <div>
-              This is the generated root route.{' '}
-              <Link to="/page-2">Click here for page 2.</Link>
-            </div>
-          }
-        />
-        <Route
-          path="/page-2"
-          element={
-            <div>
-              <Link to="/">Click here to go back to root page.</Link>
-            </div>
-          }
-        />
-      </Routes>
-      {/* END: routes */}
-    </div>
+    <AppProvider navigation={NAVIGATION} branding={BRANDING}>
+      <Outlet />
+    </AppProvider>
   );
 }
-
-export default App;

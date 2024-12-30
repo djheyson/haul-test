@@ -3,6 +3,9 @@
   "include": [],
   "references": [
     {
+      "path": "../../nest-api/app"
+    },
+    {
       "path": "./tsconfig.app.json"
     },
     {
