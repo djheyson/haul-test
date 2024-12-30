@@ -1,0 +1,5 @@
+{
+  "name": "react-client",
+  "projectType": "application",
+  "sourceRoot": "apps/react-client/app/src"
+}

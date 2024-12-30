@@ -8,6 +8,12 @@
     },
     {
       "path": "./apps/react-client/app"
+    },
+    {
+      "path": "./apps/nest-api/app-e2e"
+    },
+    {
+      "path": "./apps/nest-api/app"
     }
   ]
 }
