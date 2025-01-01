@@ -3,7 +3,7 @@ import { AxiosError } from 'axios';
 
 export const cleanInspections = async (): Promise<{ message: string }> => {
   try {
-    const response = await api.post<{ message: string }>('/clean');
+    const response = await api.post<{ message: string }>('/inspection/clean');
     return response;
   } catch (error) {
     if (error instanceof AxiosError) {

@@ -5,7 +5,7 @@ export const fetchInspections = async (
   carrierId: string
 ): Promise<{ message: string }> => {
   try {
-    const response = await api.post<{ message: string }>('/fetch-inspections', {
+    const response = await api.post<{ message: string }>('/inspection/fetch', {
       carrierId,
     });
     return response;

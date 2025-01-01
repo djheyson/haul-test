@@ -1,4 +1,4 @@
-import { ResponseGetInspection } from '@haul/nest-api/app/app.service';
+import { ResponseGetInspection } from '@haul/nest-api/app/inspection/inspection.service';
 import { api } from '../../utils/api';
 import { AxiosError } from 'axios';
 
