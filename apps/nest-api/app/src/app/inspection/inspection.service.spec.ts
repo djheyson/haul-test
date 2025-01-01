@@ -1,15 +1,15 @@
 import { Test } from '@nestjs/testing';
-import { AppService } from './app.service';
+import { InspectionService } from './inspection.service';
 
-describe('AppService', () => {
-  let service: AppService;
+describe('InspectionService', () => {
+  let service: InspectionService;
 
   beforeEach(async () => {
-    const app = await Test.createTestingModule({
-      providers: [AppService],
+    const module = await Test.createTestingModule({
+      providers: [InspectionService],
     }).compile();
 
-    service = app.get<AppService>(AppService);
+    service = module.get<InspectionService>(InspectionService);
   });
 
   const mockXmlContent = `

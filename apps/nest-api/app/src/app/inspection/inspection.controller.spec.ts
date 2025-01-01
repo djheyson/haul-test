@@ -1,17 +1,17 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { InspectionController } from './inspection.controller';
+import { InspectionService } from './inspection.service';
 
-describe('AppController', () => {
-  let appController: AppController;
-  let appService: AppService;
+describe('InspectionController', () => {
+  let inspectionController: InspectionController;
+  let inspectionService: InspectionService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      controllers: [AppController],
+      controllers: [InspectionController],
       providers: [
         {
-          provide: AppService,
+          provide: InspectionService,
           useValue: {
             getInspections: jest.fn(),
             getInspection: jest.fn(),
@@ -22,8 +22,9 @@ describe('AppController', () => {
       ],
     }).compile();
 
-    appController = module.get<AppController>(AppController);
-    appService = module.get<AppService>(AppService);
+    inspectionController =
+      module.get<InspectionController>(InspectionController);
+    inspectionService = module.get<InspectionService>(InspectionService);
   });
 
   describe('getInspections', () => {
@@ -36,9 +37,11 @@ describe('AppController', () => {
         allAssignedTo: [],
       };
 
-      jest.spyOn(appService, 'getInspections').mockResolvedValue(mockResponse);
+      jest
+        .spyOn(inspectionService, 'getInspections')
+        .mockResolvedValue(mockResponse);
 
-      const result = await appController.getInspections(1, 25, {
+      const result = await inspectionController.getInspections(1, 25, {
         sort: [{ field: 'inspectionDate', sort: 'desc' }],
       });
 
@@ -63,9 +66,11 @@ describe('AppController', () => {
         status: { key: 'no-violation', value: 'No Violation' },
       };
 
-      jest.spyOn(appService, 'getInspection').mockResolvedValue(mockInspection);
+      jest
+        .spyOn(inspectionService, 'getInspection')
+        .mockResolvedValue(mockInspection);
 
-      const result = await appController.getInspection('ABC123');
+      const result = await inspectionController.getInspection('ABC123');
       expect(result).toEqual(mockInspection);
     });
   });
@@ -79,10 +84,15 @@ describe('AppController', () => {
 
       const mockResponse = { message: 'Loaded 1 inspections' };
       jest
-        .spyOn(appService, 'loadDataFromUpload')
+        .spyOn(inspectionService, 'loadDataFromUpload')
         .mockResolvedValue(mockResponse);
 
-      const result = await appController.uploadFile(mockFile);
+      const result = await inspectionController.uploadFile(mockFile, {
+        fileId: '123',
+        partNumber: '0',
+        totalParts: '1',
+        isLastPart: 'true',
+      });
       expect(result).toEqual(mockResponse);
     });
   });
@@ -91,10 +101,10 @@ describe('AppController', () => {
     it('should clean inspection data', async () => {
       const mockResponse = { message: 'Cleaned inspection data' };
       jest
-        .spyOn(appService, 'cleanInspectionData')
+        .spyOn(inspectionService, 'cleanInspectionData')
         .mockResolvedValue(mockResponse);
 
-      const result = await appController.cleanInspectionData();
+      const result = await inspectionController.cleanInspectionData();
       expect(result).toEqual(mockResponse);
     });
   });
@@ -103,10 +113,10 @@ describe('AppController', () => {
     it('should fetch inspections', async () => {
       const mockResponse = { message: 'Loaded 1 inspections' };
       jest
-        .spyOn(appService, 'loadDataFromUpload')
+        .spyOn(inspectionService, 'loadDataFromUpload')
         .mockResolvedValue(mockResponse);
 
-      const result = await appController.fetchInspections({
+      const result = await inspectionController.fetchInspections({
         carrierId: '12345',
       });
       expect(result).toEqual(mockResponse);
