@@ -1,5 +1,10 @@
 {
   "name": "@haul/nest-api",
   "version": "0.0.1",
-  "private": true
+  "private": true,
+  "dependencies": {
+    "xml2js": "^0.6.2",
+    "dotenv": "^16.4.7",
+    "axios": "^1.7.9"
+  }
 }

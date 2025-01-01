@@ -7,6 +7,7 @@ import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app/app.module';
 import dotenv from 'dotenv';
+import express from 'express';
 
 dotenv.config();
 
@@ -17,7 +18,13 @@ async function bootstrap() {
   const allowedOrigins = process.env.ALLOWED_ORIGINS?.split(',') || [
     'http://localhost:4200',
   ];
+
   app.enableCors({ origin: allowedOrigins, credentials: true });
+
+  // Increase payload size limit
+  app.use(express.raw({ limit: '50mb' }));
+  app.use(express.text({ limit: '50mb' }));
+  app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 
   const globalPrefix = 'api';
   app.setGlobalPrefix(globalPrefix);

@@ -7,7 +7,8 @@
       "executor": "nx:run-commands",
       "options": {
         "command": "webpack-cli build",
-        "args": ["node-env=production"]
+        "args": ["node-env=production"],
+        "parallel": false
       },
       "configurations": {
         "development": {
@@ -36,6 +37,22 @@
       "options": {
         "passWithNoTests": true
       }
+    },
+    "deploy": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "# Copy all necessary files",
+          "cp apps/nest-api/app/vercel.json dist/apps/nest-api/app/",
+
+          "# Deploy to Vercel",
+          "vercel link --yes --project nest-api --cwd dist/apps/nest-api/app --token $VERCEL_TOKEN",
+          "vercel deploy ${PWD}/dist/apps/nest-api/app --prod --yes --cwd dist/apps/nest-api/app --token $VERCEL_TOKEN"
+        ],
+        "cwd": ".",
+        "parallel": false
+      },
+      "dependsOn": ["build"]
     }
   }
 }
