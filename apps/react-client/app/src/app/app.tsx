@@ -1,26 +1,33 @@
 import { AppProvider } from '@toolpad/core/react-router-dom';
 import { Outlet } from 'react-router-dom';
 import type { Navigation } from '@toolpad/core';
-
-import HomeIcon from '@mui/icons-material/Home';
-import LocalShippingIcon from '@mui/icons-material/LocalShipping';
-import InfoIcon from '@mui/icons-material/Info';
 import logo from '../assets/logo.jpg';
-
-const NAVIGATION: Navigation = [
-  { kind: 'header', title: 'Main items' },
-  { segment: '', title: 'Home', icon: <HomeIcon /> },
-  { segment: 'inspections', title: 'Inspections', icon: <LocalShippingIcon /> },
-  { segment: 'about', title: 'About', icon: <InfoIcon /> },
-];
-
-const BRANDING = {
-  title: 'Haul',
-  homeUrl: '/',
-  logo: <img src={logo} alt="Haul" />,
-};
+import { routes } from '../main';
+import { useMemo } from 'react';
+import { flattenRoutes } from '../utils';
 
 export default function App() {
+  const NAVIGATION = useMemo<Navigation>(() => {
+    return [
+      { kind: 'header', title: 'Main items' },
+      ...flattenRoutes(routes)
+        .filter((route) => route.title)
+        .map((route) => ({
+          segment: route.path,
+          title: route.title,
+          icon: route.icon,
+        })),
+    ];
+  }, [routes]);
+
+  const BRANDING = useMemo(() => {
+    return {
+      title: 'Haul',
+      homeUrl: '/',
+      logo: <img src={logo} alt="Haul" />,
+    };
+  }, []);
+
   return (
     <AppProvider navigation={NAVIGATION} branding={BRANDING}>
       <Outlet />

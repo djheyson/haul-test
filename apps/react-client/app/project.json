@@ -1,5 +1,26 @@
 {
   "name": "react-client",
   "projectType": "application",
-  "sourceRoot": "apps/react-client/app/src"
+  "sourceRoot": "apps/react-client/app/src",
+  "targets": {
+    "deploy": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "cp apps/react-client/app/vercel.json dist/apps/react-client/app/",
+          "vercel link --yes --project react-client --cwd dist/apps/react-client/app --token $VERCEL_TOKEN",
+          "vercel deploy ${PWD}/dist/apps/react-client/app --prod --yes --cwd dist/apps/react-client/app --token $VERCEL_TOKEN"
+        ],
+        "cwd": ".",
+        "parallel": false
+      },
+      "dependsOn": [
+        {
+          "target": "build",
+          "projects": "self",
+          "params": "forward"
+        }
+      ]
+    }
+  }
 }

@@ -2,13 +2,17 @@ import { StrictMode } from 'react';
 import * as ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { DashboardLayout } from './layouts';
-import { Home, About, Inspections } from './pages';
+import { Home, About, Inspections, InspectionDetail } from './pages';
 
-import App from './app/app';
+import HomeIcon from '@mui/icons-material/Home';
+import LocalShippingIcon from '@mui/icons-material/LocalShipping';
+import InfoIcon from '@mui/icons-material/Info';
 
-const router = createBrowserRouter([
+import App from './app/App';
+
+export const routes = [
   {
-    Component: App, // root layout route
+    Component: App,
     children: [
       {
         path: '/',
@@ -16,21 +20,40 @@ const router = createBrowserRouter([
         children: [
           {
             path: '',
+            title: 'Home',
+            icon: <HomeIcon />,
+            crumb: () => 'Home',
             Component: Home,
           },
           {
             path: 'inspections',
-            Component: Inspections,
+            title: 'Inspections',
+            icon: <LocalShippingIcon />,
+            crumb: () => 'Inspections',
+            children: [
+              {
+                index: true,
+                Component: Inspections,
+              },
+              {
+                path: ':reportNumber',
+                Component: InspectionDetail,
+                crumb: () => 'Inspection Detail',
+              },
+            ],
           },
           {
             path: 'about',
+            title: 'About',
+            icon: <InfoIcon />,
+            crumb: () => 'About',
             Component: About,
           },
         ],
       },
     ],
   },
-]);
+];
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -38,6 +61,6 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <RouterProvider router={createBrowserRouter(routes)} />
   </StrictMode>
 );
