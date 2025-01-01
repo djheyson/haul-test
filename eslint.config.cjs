@@ -33,8 +33,11 @@ module.exports = [
       '**/*.jsx',
       '**/*.cjs',
       '**/*.mjs',
+      '**/*.json',
     ],
-    // Override or add rules here
-    rules: {},
+    rules: {
+      '@typescript-eslint/no-explicit-any': 'off',
+      '@typescript-eslint/no-inferrable-types': 'off',
+    },
   },
 ];
