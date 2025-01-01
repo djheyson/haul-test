@@ -1,10 +1,9 @@
+import {
+  Filters,
+  ResponseGetInspections,
+} from '@haul/nest-api/app/app.service';
 import { api } from '../../utils/api';
 import { AxiosError } from 'axios';
-
-interface PaginatedResponse {
-  items: any[];
-  total: number;
-}
 
 interface PaginationParams {
   page: number;
@@ -14,25 +13,22 @@ interface PaginationParams {
 export const getInspections = async ({
   page,
   pageSize,
-}: PaginationParams): Promise<PaginatedResponse> => {
+  filters,
+}: PaginationParams & {
+  filters: Filters;
+}): Promise<ResponseGetInspections> => {
   try {
-    const response = await api.get<PaginatedResponse>('/', {
-      params: { page, pageSize },
+    const response = await api.get<ResponseGetInspections>('/', {
+      params: { page, pageSize, filters },
     });
 
-    return {
-      items: response.items,
-      total: response.total,
-    };
+    return response;
   } catch (error) {
     if (error instanceof AxiosError) {
-      console.error('Error fetching paginated data:', error.message);
+      console.error('Error fetching inspections:', error.message);
     } else {
       console.error('Unexpected error:', error);
     }
-    return {
-      items: [],
-      total: 0,
-    };
+    return null;
   }
 };
