@@ -52,7 +52,12 @@
         "cwd": ".",
         "parallel": false
       },
-      "dependsOn": ["build"]
+      "dependsOn": [
+        {
+          "target": "build",
+          "projects": "self"
+        }
+      ]
     }
   }
 }
