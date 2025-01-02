@@ -8,7 +8,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import InfoIcon from '@mui/icons-material/Info';
 
-import App from './app/App';
+import App from './app/app';
 
 export const routes = [
   {
