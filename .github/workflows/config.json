@@ -2,17 +2,11 @@
   "projects": [
     {
       "name": "nest-api",
-      "type": "api",
-      "secrets": {
-        "VERCEL_TOKEN": "VERCEL_TOKEN_DEFAULT"
-      }
+      "type": "api"
     },
     {
       "name": "react-client",
-      "type": "web",
-      "secrets": {
-        "VERCEL_TOKEN": "VERCEL_TOKEN_DEFAULT"
-      }
+      "type": "web"
     }
   ]
 }
