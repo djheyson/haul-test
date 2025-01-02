@@ -30,6 +30,8 @@ jobs:
 
       - name: Build
         if: matrix.project.deploy
+        env:
+          REACT_APP_BACKEND_URL: ${{ vars.REACT_APP_BACKEND_URL }}
         run: npx nx run ${{ matrix.project.name }}:build
 
       - name: Deploy
