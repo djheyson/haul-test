@@ -36,4 +36,5 @@ jobs:
         if: matrix.project.deploy
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN_DEFAULT }}
+          REACT_APP_BACKEND_URL: ${{ vars.REACT_APP_BACKEND_URL }}
         run: npx nx run ${{ matrix.project.name }}:deploy
