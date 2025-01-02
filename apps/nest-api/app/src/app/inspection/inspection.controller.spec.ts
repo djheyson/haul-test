@@ -1,7 +1,3 @@
-declare global {
-  var fetch: jest.Mock;
-}
-
 import { Test, TestingModule } from '@nestjs/testing';
 import { InspectionController } from './inspection.controller';
 import { InspectionService } from './inspection.service';
