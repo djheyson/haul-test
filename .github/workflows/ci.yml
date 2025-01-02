@@ -1,4 +1,4 @@
-name: CI/CD
+name: CI
 
 on:
   push:
@@ -12,6 +12,7 @@ jobs:
     strategy:
       matrix:
         project: ${{ fromJson(github.event_name == 'pull_request' && '[{"name":"nest-api"},{"name":"react-client"}]' || '[{"name":"nest-api","deploy":true},{"name":"react-client","deploy":true}]') }}
+      fail-fast: false
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
