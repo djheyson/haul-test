@@ -34,6 +34,7 @@ export function Toolbar({
       <FiltersContainer>
         <FilterControl variant="standard" size="small">
           <Select
+            disabled={!allAssignedTo?.length}
             startAdornment={
               <InputAdornment position="start">
                 <InputLabel id="assigned-to-label">Assigned To:</InputLabel>
@@ -88,7 +89,7 @@ export function Toolbar({
           <Select
             startAdornment={
               <InputAdornment position="start">
-                <InputLabel id="basic-label">Basic:</InputLabel>
+                <InputLabel id="basic-label">BASIC:</InputLabel>
               </InputAdornment>
             }
             id="basic"
@@ -112,6 +113,7 @@ export function Toolbar({
       </FiltersContainer>
 
       <Button
+        size="small"
         variant="outlined"
         color="error"
         onClick={() => cleanInspections().finally(() => refetch?.())}

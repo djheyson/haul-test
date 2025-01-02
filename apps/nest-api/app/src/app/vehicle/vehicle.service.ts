@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import axios from 'axios';
+import { InspectionData } from '../inspection/inspection.service';
 
 export interface VehicleInfo {
   vehicleIdNumber: string;
@@ -7,7 +8,20 @@ export interface VehicleInfo {
   model: string;
   modelYear: string;
   vehicleType: string;
-  manufacturerName: string;
+  manufacturer: string;
+  bodyCabType: string;
+  bodyClass: string;
+  brakeSystemType: string;
+  driveType: string;
+  fuelTypePrimary: string;
+  vehicleDescriptor: string;
+}
+
+export interface VehicleResponse {
+  vehicleInfo: VehicleInfo;
+  history: any[];
+  linkedEquipment: any[];
+  linkedInspections: InspectionData[];
 }
 
 @Injectable()
@@ -28,7 +42,13 @@ export class VehicleService {
         model: result.Model,
         modelYear: result.ModelYear,
         vehicleType: result.VehicleType,
-        manufacturerName: result.ManufacturerName,
+        manufacturer: result.Manufacturer,
+        bodyCabType: result.BodyCabType,
+        bodyClass: result.BodyClass,
+        brakeSystemType: result.BrakeSystemType,
+        driveType: result.DriveType,
+        fuelTypePrimary: result.FuelTypePrimary,
+        vehicleDescriptor: result.VehicleDescriptor,
       };
     } catch (error) {
       console.error('Error decoding VIN:', error);

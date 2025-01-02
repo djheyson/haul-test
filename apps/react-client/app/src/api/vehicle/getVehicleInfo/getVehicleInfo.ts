@@ -1,12 +1,6 @@
-import { VehicleInfo } from '@haul/nest-api/app/vehicle/vehicle.service';
+import { VehicleResponse } from '@haul/nest-api/app/vehicle/vehicle.service';
 import { api } from '../../utils/api';
 import { AxiosError } from 'axios';
-
-interface VehicleResponse {
-  vehicleInfo: VehicleInfo;
-  history: any[];
-  linkedEquipment: any[];
-}
 
 export const getVehicleInfo = async (
   vin: string

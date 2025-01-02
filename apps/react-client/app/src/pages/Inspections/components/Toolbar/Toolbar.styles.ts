@@ -10,12 +10,11 @@ export const ToolbarContainer = styled('div')(({ theme }) => ({
 
 export const FiltersContainer = styled('div')(({ theme }) => ({
   display: 'flex',
-  gap: theme.spacing(1),
+  gap: theme.spacing(2),
   alignItems: 'center',
   flexWrap: 'wrap',
 }));
 
 export const FilterControl = styled(FormControl)(({ theme }) => ({
-  margin: theme.spacing(1),
   minWidth: 120,
 }));

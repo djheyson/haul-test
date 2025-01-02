@@ -5,7 +5,7 @@ import {
   VehicleType,
   LicenseNumber,
 } from './VehiclePlateCell.styles';
-import { VehicleModal } from '../VehicleModal/VehicleModal';
+import { VehicleModal } from '../../../../../components';
 import { useState } from 'react';
 
 export const VehiclePlateCell = ({ row }: GridRenderCellParams) => {

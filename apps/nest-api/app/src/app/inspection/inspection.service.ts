@@ -1,6 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import * as xml2js from 'xml2js';
 import * as crypto from 'crypto';
+import { VehicleInfo } from '../vehicle/vehicle.service';
+import { VehicleService } from '../vehicle/vehicle.service';
+import axios from 'axios';
 
 export interface PaginatedResponse<T> {
   items: T[];
@@ -13,6 +16,8 @@ export interface Vehicle {
   unitType?: string;
   licenseState?: string;
   licenseNumber?: string;
+  vehicleInfo?: VehicleInfo;
+  linkedInspections?: InspectionData[];
 }
 
 export interface Violation {
@@ -63,6 +68,31 @@ export type ResponseGetInspection = InspectionData | null;
 @Injectable()
 export class InspectionService {
   private cachedData: InspectionData[] = [];
+
+  constructor(private readonly vehicleService: VehicleService) {
+    this.initializeData(process.env.DEFAULT_CARRIER_ID);
+  }
+
+  getCachedData(): InspectionData[] {
+    return this.cachedData;
+  }
+
+  async initializeData(carrierId?: string) {
+    try {
+      if (!carrierId) {
+        Logger.warn('No DEFAULT_CARRIER_ID provided in environment variables');
+        return;
+      }
+
+      const url = `${process.env.FMCS_API_URL}/SMS/Carrier/${carrierId}/Download.aspx?BASIC=0&FileType=XML`;
+      Logger.log('Fetching initial inspection data...');
+      const response = await axios.get(url);
+      await this.loadDataFromUpload(response.data);
+      Logger.log('Initial inspection data loaded successfully');
+    } catch (error) {
+      Logger.error('Failed to fetch initial inspection data:', error);
+    }
+  }
 
   async loadDataFromUpload(xmlContent: string): Promise<{ message: string }> {
     const parser = new xml2js.Parser({ explicitArray: false });
@@ -204,11 +234,36 @@ export class InspectionService {
   }
 
   async getInspection(reportNumber: string): Promise<ResponseGetInspection> {
-    return (
-      this.cachedData.find(
-        (inspection) => inspection.reportNumber === reportNumber
-      ) || null
+    const inspection = this.cachedData.find(
+      (inspection) => inspection.reportNumber === reportNumber
     );
+
+    if (!inspection) {
+      return null;
+    }
+
+    const vehiclePromises = inspection.vehicles.map(async (vehicle) => ({
+      ...vehicle,
+      vehicleInfo: await this.vehicleService.decodeVin(
+        vehicle.vehicleIdNumber as string
+      ),
+      linkedInspections: this.cachedData.filter((i) =>
+        i.vehicles.some((v) => v.vehicleIdNumber === vehicle.vehicleIdNumber)
+      ),
+    }));
+
+    const vehiclesWithInfo = await Promise.all(vehiclePromises);
+
+    return {
+      ...inspection,
+      vehicles: vehiclesWithInfo as Vehicle[],
+    };
+  }
+
+  async getInspectionDetails(reportNumber: string): Promise<any> {
+    const url = `${process.env.FMCS_API_URL}/SMS/Event/Inspection/${reportNumber}.aspx`;
+    const response = await axios.get(url);
+    return response.data;
   }
 
   async cleanInspectionData() {

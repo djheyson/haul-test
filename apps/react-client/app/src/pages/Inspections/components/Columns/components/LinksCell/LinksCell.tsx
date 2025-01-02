@@ -11,7 +11,7 @@ import {
   StyledIconButton,
   StyledLink,
 } from './LinksCell.styles';
-import { VehicleModal } from '../VehicleModal/VehicleModal';
+import { VehicleModal } from '../../../../../components';
 
 export const LinksCell = ({ row }: GridRenderCellParams) => {
   const [vehicleIdNumber, setVehicleIdNumber] = useState<string>();

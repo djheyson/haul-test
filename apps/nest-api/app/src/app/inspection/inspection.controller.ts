@@ -15,7 +15,6 @@ import type {
   Filters,
 } from './inspection.service';
 import { FileInterceptor } from '@nestjs/platform-express';
-import axios from 'axios';
 
 @Controller('inspection')
 export class InspectionController {
@@ -106,11 +105,9 @@ export class InspectionController {
   @Post('fetch')
   async fetchInspections(@Body() body: { carrierId: string }) {
     const { carrierId } = body;
-    const url = `${process.env.FMCS_API_URL}/SMS/Carrier/${carrierId}/Download.aspx?BASIC=0&FileType=XML`;
 
     try {
-      const response = await axios.get(url);
-      return this.inspectionService.loadDataFromUpload(response.data);
+      return this.inspectionService.initializeData(carrierId);
     } catch (error) {
       throw new Error(`Failed to fetch inspections: ${error}`);
     }

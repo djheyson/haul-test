@@ -4,32 +4,39 @@ import { Box } from '@mui/material';
 export const Container = styled(Box)({
   display: 'grid',
   gridTemplateRows: 'auto 1fr',
-  overflow: 'auto',
   height: '100%',
-  gap: 22,
+  gap: 24,
+  overflow: 'hidden',
+});
+
+export const MainContent = styled(Box)({
+  display: 'grid',
+  gridTemplateColumns: '1fr 400px',
+  overflow: 'hidden',
+  height: '100%',
 });
 
 export const ContentContainer = styled(Box)({
   display: 'flex',
   flexDirection: 'column',
-  gap: 22,
+  gap: 24,
   overflow: 'auto',
+  padding: '16px',
 });
 
 export const FormSection = styled(Box)({
   display: 'flex',
   flexDirection: 'column',
-  gap: 10,
+  gap: 16,
+  padding: '16px',
+  backgroundColor: '#f5f5f5',
+  borderRadius: 4,
 });
 
 export const GridRow = styled(Box)({
   display: 'grid',
   gridTemplateColumns: '1fr 1fr',
-  gap: 10,
+  gap: 16,
 });
 
-export const TimeGrid = styled(Box)({
-  display: 'grid',
-  gridTemplateColumns: '1fr 1fr',
-  gap: 10,
-});
+export const TimeGrid = styled(GridRow)();

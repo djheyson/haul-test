@@ -11,11 +11,11 @@ import {
   Paper,
 } from '@mui/material';
 
-export const ViolationSection = ({
-  violations,
-}: {
+interface ViolationSectionProps {
   violations: Violation[];
-}) => {
+}
+
+export const ViolationSection = ({ violations }: ViolationSectionProps) => {
   if (!violations?.length) return null;
 
   return (

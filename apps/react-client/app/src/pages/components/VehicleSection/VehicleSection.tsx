@@ -1,5 +1,4 @@
 import { Vehicle } from '@haul/nest-api/app/inspection/inspection.service';
-import { VehicleInfo } from '@haul/nest-api/app/vehicle/vehicle.service';
 import {
   Box,
   Typography,
@@ -12,14 +11,12 @@ import {
   Paper,
 } from '@mui/material';
 
-export const VehicleSection = ({
-  vehicles,
-  vehicleInfo,
-}: {
+interface VehicleSectionProps {
   vehicles: Vehicle[];
-  vehicleInfo: VehicleInfo[];
-}) => {
-  if (!vehicles?.length || !vehicleInfo?.length) return null;
+}
+
+export const VehicleSection = ({ vehicles }: VehicleSectionProps) => {
+  if (!vehicles?.length) return null;
 
   return (
     <Box>
@@ -32,9 +29,15 @@ export const VehicleSection = ({
               <TableCell>Unit</TableCell>
               <TableCell align="right">Type</TableCell>
               <TableCell align="right">Make</TableCell>
-              <TableCell align="right">Plate state</TableCell>
-              <TableCell align="right">Plate number</TableCell>
-              <TableCell align="right">VIN</TableCell>
+              <TableCell align="right" style={{ whiteSpace: 'nowrap' }}>
+                Plate state
+              </TableCell>
+              <TableCell align="right" style={{ whiteSpace: 'nowrap' }}>
+                Plate number
+              </TableCell>
+              <TableCell align="right" style={{ whiteSpace: 'nowrap' }}>
+                VIN
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -43,16 +46,15 @@ export const VehicleSection = ({
                 <TableCell component="th" scope="row">
                   {row.unit}
                 </TableCell>
-                <TableCell component="th" scope="row" align="right">
+                <TableCell
+                  component="th"
+                  scope="row"
+                  align="right"
+                  style={{ whiteSpace: 'nowrap' }}
+                >
                   {row.unitType}
                 </TableCell>
-                <TableCell align="right">
-                  {
-                    vehicleInfo.find(
-                      (info) => info.vehicleIdNumber === row.vehicleIdNumber
-                    )?.make
-                  }
-                </TableCell>
+                <TableCell align="right">{row.vehicleInfo?.make}</TableCell>
                 <TableCell align="right">{row.licenseState}</TableCell>
                 <TableCell align="right">{row.licenseNumber}</TableCell>
                 <TableCell align="right">{row.vehicleIdNumber}</TableCell>
