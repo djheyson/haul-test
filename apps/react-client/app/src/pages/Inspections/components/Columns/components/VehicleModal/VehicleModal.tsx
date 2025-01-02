@@ -49,7 +49,7 @@ export const VehicleModal = ({
     }
 
     return (
-      <ModalContainer>
+      <>
         <Typography variant="h6">Vehicle Information</Typography>
 
         <VehicleInfoContainer>
@@ -84,18 +84,18 @@ export const VehicleModal = ({
             </InfoRow>
           )}
         </VehicleInfoContainer>
-      </ModalContainer>
+      </>
     );
   };
 
   return (
     <Modal
-      open={Boolean(data)}
+      open={Boolean(vehicleIdNumber)}
       onClose={handleClose}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
-      {renderBody()}
+      <ModalContainer>{renderBody()}</ModalContainer>
     </Modal>
   );
 };
