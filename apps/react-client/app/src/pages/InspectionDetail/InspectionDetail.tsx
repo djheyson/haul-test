@@ -4,7 +4,7 @@ import { getInspection } from '../../api';
 import { useEffect, useState } from 'react';
 import { ResponseGetInspection } from '@haul/nest-api/app/inspection/inspection.service';
 import { PageHeader } from '@toolpad/core';
-import { Box, Typography, TextField } from '@mui/material';
+import { Box, Typography, TextField, CircularProgress } from '@mui/material';
 import { VehicleSection, ViolationSection, VehicleCard } from '../components';
 import {
   Container,
@@ -13,6 +13,8 @@ import {
   FormSection,
   GridRow,
   TimeGrid,
+  CenteredContent,
+  NoDataText,
 } from './InspectionDetail.styles';
 
 export function InspectionDetail() {
@@ -29,11 +31,24 @@ export function InspectionDetail() {
     }
   }, [reportNumber]);
 
-  if (isLoading) return <div>Loading...</div>;
-  if (!data) return <div>No data</div>;
+  if (isLoading)
+    return (
+      <CenteredContent>
+        <CircularProgress />
+      </CenteredContent>
+    );
 
-  const vehicles = data.vehicles.filter((v) => v.unitType);
-  const violations = data.violations.filter((v) => v.code);
+  if (!data)
+    return (
+      <Container>
+        <CenteredContent>
+          <NoDataText>No inspection data found</NoDataText>
+        </CenteredContent>
+      </Container>
+    );
+
+  const vehicles = data?.vehicles.filter((v) => v.unitType);
+  const violations = data?.violations.filter((v) => v.code);
 
   return (
     <Container>

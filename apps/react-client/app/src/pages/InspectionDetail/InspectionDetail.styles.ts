@@ -1,5 +1,5 @@
 import { styled } from '@mui/material/styles';
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 
 export const Container = styled(Box)({
   display: 'grid',
@@ -40,3 +40,15 @@ export const GridRow = styled(Box)({
 });
 
 export const TimeGrid = styled(GridRow)();
+
+export const CenteredContent = styled(Box)({
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  height: '100%',
+});
+
+export const NoDataText = styled(Typography)({
+  color: '#666',
+  fontSize: '1.125rem',
+});
