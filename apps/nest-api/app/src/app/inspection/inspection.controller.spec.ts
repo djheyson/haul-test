@@ -1,6 +1,12 @@
+declare global {
+  var fetch: jest.Mock;
+}
+
 import { Test, TestingModule } from '@nestjs/testing';
 import { InspectionController } from './inspection.controller';
 import { InspectionService } from './inspection.service';
+import axios from 'axios';
+jest.mock('axios');
 
 describe('InspectionController', () => {
   let inspectionController: InspectionController;
@@ -111,6 +117,19 @@ describe('InspectionController', () => {
 
   describe('fetchInspections', () => {
     it('should fetch inspections', async () => {
+      const mockXmlResponse = `
+        <carrierData>
+          <inspections>
+            <inspection inspection_date="2024-01-01">
+              <vehicles><vehicle></vehicle></vehicles>
+              <violations><violation></violation></violations>
+            </inspection>
+          </inspections>
+        </carrierData>
+      `;
+
+      (axios.get as jest.Mock).mockResolvedValue({ data: mockXmlResponse });
+
       const mockResponse = { message: 'Loaded 1 inspections' };
       jest
         .spyOn(inspectionService, 'loadDataFromUpload')
@@ -119,7 +138,16 @@ describe('InspectionController', () => {
       const result = await inspectionController.fetchInspections({
         carrierId: '12345',
       });
+
       expect(result).toEqual(mockResponse);
+    });
+
+    it('should handle fetch errors', async () => {
+      (axios.get as jest.Mock).mockRejectedValue(new Error('Network error'));
+
+      await expect(
+        inspectionController.fetchInspections({ carrierId: '12345' })
+      ).rejects.toThrow('Failed to fetch inspections');
     });
   });
 });
