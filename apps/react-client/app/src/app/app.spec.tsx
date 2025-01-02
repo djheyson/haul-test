@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import { describe, it, expect, vi } from 'vitest';
-import App from './App';
+import App from './app';
 
 // Mock the dependencies
 vi.mock('@toolpad/core/react-router-dom', () => ({
