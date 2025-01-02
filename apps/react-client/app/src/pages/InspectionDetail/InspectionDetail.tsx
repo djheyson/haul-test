@@ -135,10 +135,6 @@ export function InspectionDetail() {
 
         <ContentContainer>
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-            <Typography variant="h5">Inspection Details</Typography>
-          </Box>
-
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
             <Typography variant="h5">Vehicles</Typography>
 
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
