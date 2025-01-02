@@ -39,10 +39,12 @@ export class VehicleService {
   async getVehicleHistory(vin: string) {
     // Get all inspections for this VIN
     // You'll need to implement this based on your data structure
+    console.log('getVehicleHistory', vin);
   }
 
   async getLinkedEquipment(vin: string) {
     // Get all trailers/equipment linked to this vehicle
     // You'll need to implement this based on your data structure
+    console.log('getLinkedEquipment', vin);
   }
 }
