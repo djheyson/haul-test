@@ -14,8 +14,8 @@ export const VehiclePlateCell = ({ row }: GridRenderCellParams) => {
     <VehicleList>
       {row.vehicles
         .filter((v: any) => v.unitType && v.licenseNumber)
-        .map((v: any) => (
-          <VehicleItem key={v.vehicleIdNumber}>
+        .map((v: any, index: number) => (
+          <VehicleItem key={index}>
             <VehicleType>{`${v.unitType}:`}</VehicleType>
             <LicenseNumber
               onClick={() => setVehicleIdNumber(v.vehicleIdNumber)}

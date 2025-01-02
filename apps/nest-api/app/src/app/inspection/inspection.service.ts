@@ -195,12 +195,46 @@ export class InspectionService {
     if (filters.sort?.length) {
       filteredData.sort((a, b) => {
         for (const { field, sort } of filters?.sort || []) {
-          const aValue = a[field as keyof InspectionData] || '';
-          const bValue = b[field as keyof InspectionData] || '';
-          if (aValue !== bValue) {
-            return sort === 'asc'
-              ? aValue.localeCompare(bValue)
-              : bValue.localeCompare(aValue);
+          // Handle nested violation fields
+          if (field === 'basic' || field === 'description') {
+            const aValue = a.violations[0]?.[field] || '';
+            const bValue = b.violations[0]?.[field] || '';
+            if (aValue !== bValue) {
+              return sort === 'asc'
+                ? aValue.localeCompare(bValue)
+                : bValue.localeCompare(aValue);
+            }
+            continue;
+          }
+
+          const aValue = a[field as keyof InspectionData];
+          const bValue = b[field as keyof InspectionData];
+
+          // Handle status object specially
+          if (field === 'status') {
+            const aStatus = (aValue as { value: string }).value;
+            const bStatus = (bValue as { value: string }).value;
+            if (aStatus !== bStatus) {
+              return sort === 'asc'
+                ? aStatus.localeCompare(bStatus)
+                : bStatus.localeCompare(aStatus);
+            }
+          }
+          // Handle numbers
+          else if (typeof aValue === 'number' && typeof bValue === 'number') {
+            if (aValue !== bValue) {
+              return sort === 'asc' ? aValue - bValue : bValue - aValue;
+            }
+          }
+          // Handle strings and other types
+          else {
+            const aString = String(aValue || '');
+            const bString = String(bValue || '');
+            if (aString !== bString) {
+              return sort === 'asc'
+                ? aString.localeCompare(bString)
+                : bString.localeCompare(aString);
+            }
           }
         }
         return 0;
@@ -260,6 +294,7 @@ export class InspectionService {
     };
   }
 
+  // TODO: discover how this API works
   async getInspectionDetails(reportNumber: string): Promise<any> {
     const url = `${process.env.FMCS_API_URL}/SMS/Event/Inspection/${reportNumber}.aspx`;
     const response = await axios.get(url);
