@@ -1,12 +1,23 @@
 import { Test } from '@nestjs/testing';
 import { InspectionService } from './inspection.service';
+import { VehicleService } from '../vehicle/vehicle.service';
 
 describe('InspectionService', () => {
   let service: InspectionService;
 
+  const mockVehicleService = {
+    decodeVin: jest.fn().mockResolvedValue({}),
+  };
+
   beforeEach(async () => {
     const module = await Test.createTestingModule({
-      providers: [InspectionService],
+      providers: [
+        InspectionService,
+        {
+          provide: VehicleService,
+          useValue: mockVehicleService,
+        },
+      ],
     }).compile();
 
     service = module.get<InspectionService>(InspectionService);

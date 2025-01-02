@@ -19,6 +19,8 @@ describe('InspectionController', () => {
             getInspection: jest.fn(),
             loadDataFromUpload: jest.fn(),
             cleanInspectionData: jest.fn(),
+            getInspectionDetails: jest.fn(),
+            initializeData: jest.fn(),
           },
         },
       ],
@@ -126,24 +128,25 @@ describe('InspectionController', () => {
 
       (axios.get as jest.Mock).mockResolvedValue({ data: mockXmlResponse });
 
-      const mockResponse = { message: 'Loaded 1 inspections' };
       jest
-        .spyOn(inspectionService, 'loadDataFromUpload')
-        .mockResolvedValue(mockResponse);
+        .spyOn(inspectionService, 'initializeData')
+        .mockResolvedValue(undefined);
 
       const result = await inspectionController.fetchInspections({
         carrierId: '12345',
       });
 
-      expect(result).toEqual(mockResponse);
+      expect(result).toEqual(undefined);
     });
 
     it('should handle fetch errors', async () => {
-      (axios.get as jest.Mock).mockRejectedValue(new Error('Network error'));
+      jest
+        .spyOn(inspectionService, 'initializeData')
+        .mockRejectedValue(new Error('Network error'));
 
       await expect(
         inspectionController.fetchInspections({ carrierId: '12345' })
-      ).rejects.toThrow('Failed to fetch inspections');
+      ).rejects.toThrow('Network error');
     });
   });
 });
