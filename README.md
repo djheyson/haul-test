@@ -1,90 +1,114 @@
-# Haul
+# Haul - Inspection Management System
 
-<a alt="Nx logo" href="https://nx.dev" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="45"></a>
+A modern web application built with Nx, NestJS, and React for managing trucking inspections data. The system provides a comprehensive view of inspection records, vehicle information, and compliance data.
 
-✨ Your new, shiny [Nx workspace](https://nx.dev) is almost ready ✨.
+🚀 [Live Demo](https://react-client-three-orcin.vercel.app/)
 
-[Learn more about this workspace setup and its capabilities](https://nx.dev/nx-api/js?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects) or run `npx nx graph` to visually explore what was created. Now, let's get you up to speed!
+## Prerequisites
 
-## Finish your CI setup
+- Node.js (LTS version)
+- npm or yarn
+- Git
 
-[Click here to finish setting up your workspace!](https://cloud.nx.app/connect/Zz1QmX7XwL)
+## Getting Started
 
+1. Clone the repository:
 
-## Generate a library
-
-```sh
-npx nx g @nx/js:lib packages/pkg1 --publishable --importPath=@my-org/pkg1
+```bash
+git clone https://github.com/djheyson/haul-test
+cd haul-test
 ```
 
-## Run tasks
+2. Set up environment variables:
 
-To build the library use:
+For the API (nest-api):
 
-```sh
-npx nx build pkg1
+```bash
+cp apps/nest-api/app/.env.sample apps/nest-api/app/.env
 ```
 
-To run any task with Nx use:
-
-```sh
-npx nx <target> <project-name>
-```
-
-These targets are either [inferred automatically](https://nx.dev/concepts/inferred-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) or defined in the `project.json` or `package.json` files.
-
-[More about running tasks in the docs &raquo;](https://nx.dev/features/run-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-## Versioning and releasing
-
-To version and release the library use
+Required API environment variables:
 
 ```
-npx nx release
+ALLOWED_ORIGINS=http://localhost:4200,http://localhost:4300
+VERCEL_TOKEN=<your-vercel-token>
+FMCS_API_URL=https://ai.fmcsa.dot.gov
+VIN_API_URL=https://vpic.nhtsa.dot.gov
 ```
 
-Pass `--dry-run` to see what would happen without actually releasing the library.
+For the client (react-client):
 
-[Learn more about Nx release &raquo;](hhttps://nx.dev/features/manage-releases?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-## Keep TypeScript project references up to date
-
-Nx automatically updates TypeScript [project references](https://www.typescriptlang.org/docs/handbook/project-references.html) in `tsconfig.json` files to ensure they remain accurate based on your project dependencies (`import` or `require` statements). This sync is automatically done when running tasks such as `build` or `typecheck`, which require updated references to function correctly.
-
-To manually trigger the process to sync the project graph dependencies information to the TypeScript project references, run the following command:
-
-```sh
-npx nx sync
+```bash
+cp apps/react-client/app/.env.sample apps/react-client/app/.env
 ```
 
-You can enforce that the TypeScript project references are always in the correct state when running in CI by adding a step to your CI job configuration that runs the following command:
+Required client environment variables:
 
-```sh
-npx nx sync:check
+```
+REACT_APP_BACKEND_URL=http://localhost:3000
+VERCEL_TOKEN=<your-vercel-token>
 ```
 
-[Learn more about nx sync](https://nx.dev/reference/nx-commands#sync)
+3. Install dependencies:
 
+```bash
+npm install
+```
 
-[Learn more about Nx on CI](https://nx.dev/ci/intro/ci-with-nx#ready-get-started-with-your-provider?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+## Development
 
-## Install Nx Console
+To run the API server:
 
-Nx Console is an editor extension that enriches your developer experience. It lets you run tasks, generate code, and improves code autocompletion in your IDE. It is available for VSCode and IntelliJ.
+```bash
+nx run nest-api:serve
+```
 
-[Install Nx Console &raquo;](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+To run the React client:
 
-## Useful links
+```bash
+nx run react-client:serve
+```
 
-Learn more:
+## Building and Deployment
 
-- [Learn more about this workspace setup](https://nx.dev/nx-api/js?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects)
-- [Learn about Nx on CI](https://nx.dev/ci/intro/ci-with-nx?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Releasing Packages with Nx release](https://nx.dev/features/manage-releases?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [What are Nx plugins?](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+To build a project:
 
-And join the Nx community:
-- [Discord](https://go.nx.dev/community)
-- [Follow us on X](https://twitter.com/nxdevtools) or [LinkedIn](https://www.linkedin.com/company/nrwl)
-- [Our Youtube channel](https://www.youtube.com/@nxdevtools)
-- [Our blog](https://nx.dev/blog?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+```bash
+nx run <project-name>:build
+```
+
+To deploy to Vercel (ensure VERCEL_TOKEN is set):
+
+```bash
+nx run <project-name>:deploy
+```
+
+## Project Structure
+
+- `apps/nest-api` - Backend API service built with NestJS
+- `apps/react-client` - Frontend application built with React
+
+## Features
+
+- Inspection data management and visualization
+- Filtering by BASIC category
+- Sorting by various fields
+- Detailed inspection views
+- Vehicle information lookup via VIN
+- Equipment relationship tracking
+
+## Testing
+
+- API tests use Jest
+- React client tests use Vitest
+
+## Additional Resources
+
+- [Nx Documentation](https://nx.dev)
+- [NestJS Documentation](https://docs.nestjs.com)
+- [React Documentation](https://reactjs.org)
+- [Vercel Documentation](https://vercel.com/docs)
+
+## License
+
+MIT

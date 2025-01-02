@@ -35,6 +35,7 @@ export const columns: GridColDef[] = [
   },
   {
     editable: false,
+    sortable: false,
     field: 'vehiclePlate',
     headerName: 'Vehicle Plate',
     width: 225,
@@ -66,6 +67,7 @@ export const columns: GridColDef[] = [
   },
   {
     editable: false,
+    sortable: false,
     field: 'weight',
     headerName: 'Weight',
     width: 120,
