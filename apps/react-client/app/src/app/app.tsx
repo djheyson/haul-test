@@ -18,7 +18,7 @@ export default function App() {
           icon: route.icon,
         })),
     ];
-  }, [routes]);
+  }, []);
 
   const BRANDING = useMemo(() => {
     return {

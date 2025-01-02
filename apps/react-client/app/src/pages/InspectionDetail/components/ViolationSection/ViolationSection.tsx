@@ -16,7 +16,7 @@ export const ViolationSection = ({
 }: {
   violations: Violation[];
 }) => {
-  if (!Boolean(violations?.length)) return null;
+  if (!violations?.length) return null;
 
   return (
     <Box>

@@ -5,7 +5,7 @@ import App from './App';
 
 // Mock the dependencies
 vi.mock('@toolpad/core/react-router-dom', () => ({
-  AppProvider: ({ children }: { children: React.ReactNode }) => <>{children}</>,
+  AppProvider: ({ children }: { children: React.ReactNode }) => children,
 }));
 
 vi.mock('../utils', () => ({

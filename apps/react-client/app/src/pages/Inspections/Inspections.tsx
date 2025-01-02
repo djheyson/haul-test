@@ -34,6 +34,7 @@ export function Inspections() {
 
   useEffect(() => {
     fetchInspections();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page, pageSize, filters]);
 
   if (loading && !data) {

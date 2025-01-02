@@ -19,7 +19,7 @@ export const VehicleSection = ({
   vehicles: Vehicle[];
   vehicleInfo: VehicleInfo[];
 }) => {
-  if (!Boolean(vehicles?.length) || !vehicleInfo?.length) return null;
+  if (!vehicles?.length || !vehicleInfo?.length) return null;
 
   return (
     <Box>

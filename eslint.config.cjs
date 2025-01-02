@@ -33,7 +33,6 @@ module.exports = [
       '**/*.jsx',
       '**/*.cjs',
       '**/*.mjs',
-      '**/*.json',
     ],
     rules: {
       '@typescript-eslint/no-explicit-any': 'off',
