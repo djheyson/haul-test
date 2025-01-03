@@ -12,10 +12,9 @@ export const FormContainer = styled(Box)(({ theme }) => ({
 }));
 
 export const ButtonGroup = styled(Box)(({ theme }) => ({
-  display: 'flex',
+  display: 'grid',
+  gridTemplateColumns: 'auto auto',
   gap: theme.spacing(2),
-  justifyContent: 'end',
-  flexDirection: 'column',
 }));
 
 export const FileInputContainer = styled(Box)(({ theme }) => ({
