@@ -20,6 +20,7 @@ import {
   FormContainer,
   ButtonGroup,
   FileInputContainer,
+  WarningBox,
 } from './UploadInspectionsForm.styles';
 import { CheckCircleOutline } from '@mui/icons-material';
 
@@ -139,6 +140,12 @@ export const UploadInspectionsForm = ({ refetch }: { refetch: () => void }) => {
       <Divider />
 
       <ButtonGroup>
+        <WarningBox>
+          <strong>Important:</strong> Fetching data from FMCSA will overwrite
+          existing data. Due to free hosting limitations, large data fetches may
+          timeout. If this occurs, please use the file upload option instead.
+        </WarningBox>
+
         <Button variant="contained" onClick={handleFetch} disabled={loading}>
           {loading ? 'Loading...' : 'Fetch Data From FMCSA'}
         </Button>
