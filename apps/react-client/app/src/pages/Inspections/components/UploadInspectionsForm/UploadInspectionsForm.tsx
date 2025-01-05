@@ -9,6 +9,7 @@ import {
   ListItemText,
   Link,
   Divider,
+  Snackbar,
 } from '@mui/material';
 import { useState } from 'react';
 import {
@@ -23,10 +24,12 @@ import {
   WarningBox,
 } from './UploadInspectionsForm.styles';
 import { CheckCircleOutline } from '@mui/icons-material';
+import { ErrorAlert } from './UploadInspectionsForm.styles';
 
 export const UploadInspectionsForm = ({ refetch }: { refetch: () => void }) => {
   const [file, setFile] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleFetch = async () => {
     setLoading(true);
@@ -34,7 +37,7 @@ export const UploadInspectionsForm = ({ refetch }: { refetch: () => void }) => {
       await fetchInspections('80806');
       await refetch();
     } catch (error) {
-      console.error('Fetch failed:', error);
+      setError('Something went wrong, please try again later.');
     } finally {
       setLoading(false);
     }
@@ -154,6 +157,17 @@ export const UploadInspectionsForm = ({ refetch }: { refetch: () => void }) => {
         >
           {loading ? 'Loading...' : 'Fetch Data From FMCSA'}
         </Button>
+
+        <Snackbar
+          open={!!error}
+          autoHideDuration={3000}
+          anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+          onClose={() => setError(null)}
+        >
+          <ErrorAlert severity="error" onClose={() => setError(null)}>
+            {error || 'Something went wrong, please try again later.'}
+          </ErrorAlert>
+        </Snackbar>
       </div>
     </FormContainer>
   );

@@ -1,5 +1,5 @@
 import { styled } from '@mui/material/styles';
-import { Box, Paper } from '@mui/material';
+import { Box, Paper, Alert } from '@mui/material';
 
 export const FormContainer = styled(Box)(({ theme }) => ({
   maxWidth: 500,
@@ -26,11 +26,20 @@ export const FileInputContainer = styled(Box)(({ theme }) => ({
 
 export const WarningBox = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(2),
-  backgroundColor: '#fff3e0', // Light orange background
-  border: '1px solid #ffb74d', // Orange border
+  backgroundColor: '#fff3e0',
+  border: '1px solid #ffb74d',
   borderRadius: theme.shape.borderRadius,
   fontSize: '0.875rem',
   lineHeight: 1.5,
-  color: '#e65100', // Dark orange text
+  color: '#e65100',
   marginBottom: theme.spacing(2),
+}));
+
+export const ErrorAlert = styled(Alert)(({ theme }) => ({
+  width: '100%',
+  backgroundColor: theme.palette.error.main,
+  color: theme.palette.error.contrastText,
+  '& .MuiAlert-icon': {
+    color: theme.palette.error.contrastText,
+  },
 }));
