@@ -28,6 +28,14 @@ jobs:
       - name: Test
         run: npx nx run ${{ matrix.project.name }}:test
 
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          file: ./coverage/apps/${{ matrix.project.name }}/app/lcov.info
+          flags: ${{ matrix.project.name }}
+          name: ${{ matrix.project.name }}
+
       - name: Build
         if: matrix.project.deploy
         env:

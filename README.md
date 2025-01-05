@@ -4,6 +4,11 @@ A modern web application built with Nx, NestJS, and React for managing trucking 
 
 🚀 [Live Demo](https://react-client-three-orcin.vercel.app/)
 
+## Coverage
+
+[![Nest API Coverage](https://codecov.io/gh/djheyson/haul/branch/main/graph/badge.svg?flag=nest-api)](https://codecov.io/gh/djheyson/haul)
+[![React Client Coverage](https://codecov.io/gh/djheyson/haul/branch/main/graph/badge.svg?flag=react-client)](https://codecov.io/gh/djheyson/haul)
+
 ## Prerequisites
 
 - Node.js (LTS version)
