@@ -34,7 +34,7 @@ cp apps/nest-api/app/.env.sample apps/nest-api/app/.env
 
 Required API environment variables:
 
-```
+```bash
 ALLOWED_ORIGINS=http://localhost:4200,http://localhost:4300
 VERCEL_TOKEN=<your-vercel-token>
 FMCS_API_URL=https://ai.fmcsa.dot.gov
@@ -49,7 +49,7 @@ cp apps/react-client/app/.env.sample apps/react-client/app/.env
 
 Required client environment variables:
 
-```
+```bash
 REACT_APP_BACKEND_URL=http://localhost:3000
 VERCEL_TOKEN=<your-vercel-token>
 ```
