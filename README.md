@@ -6,8 +6,8 @@ A modern web application built with Nx, NestJS, and React for managing trucking 
 
 ## Coverage
 
-[![Nest API Coverage](https://codecov.io/gh/djheyson/haul/branch/main/graph/badge.svg?flag=nest-api)](https://codecov.io/gh/djheyson/haul)
-[![React Client Coverage](https://codecov.io/gh/djheyson/haul/branch/main/graph/badge.svg?flag=react-client)](https://codecov.io/gh/djheyson/haul)
+[![Nest API Coverage](https://codecov.io/gh/djheyson/haul-test/branch/main/graph/badge.svg?flag=nest-api)](https://codecov.io/gh/djheyson/haul-test)
+[![React Client Coverage](https://codecov.io/gh/djheyson/haul-test/branch/main/graph/badge.svg?flag=react-client)](https://codecov.io/gh/djheyson/haul-test)
 
 ## Prerequisites
 
