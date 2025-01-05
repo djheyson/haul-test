@@ -25,13 +25,4 @@ describe('App', () => {
     );
     expect(baseElement).toBeTruthy();
   });
-
-  it('should render the AppProvider with correct props', () => {
-    const { container } = render(
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    );
-    expect(container).toBeTruthy();
-  });
 });

@@ -70,22 +70,32 @@ export function InspectionDetail() {
 
             <FormSection>
               <GridRow>
-                <TextField disabled label="Status" variant="filled" />
+                <TextField
+                  disabled
+                  label="Status"
+                  variant="filled"
+                  defaultValue={data.status.value}
+                />
                 <TextField
                   disabled
                   label="Report Number"
                   variant="filled"
-                  value={data.reportNumber}
+                  defaultValue={data.reportNumber}
                 />
               </GridRow>
 
               <GridRow>
-                <TextField disabled label="USDOT #" variant="filled" />
+                <TextField
+                  disabled
+                  label="USDOT #"
+                  variant="filled"
+                  defaultValue="-"
+                />
                 <TextField
                   disabled
                   label="Report State"
                   variant="filled"
-                  value={data.reportState}
+                  defaultValue={data.reportState}
                 />
               </GridRow>
 
@@ -94,11 +104,23 @@ export function InspectionDetail() {
                   disabled
                   label="Date"
                   variant="filled"
-                  value={dayjs(data.inspectionDate).format('MMM DD, YYYY')}
+                  defaultValue={dayjs(data.inspectionDate).format(
+                    'MMM DD, YYYY'
+                  )}
                 />
                 <TimeGrid>
-                  <TextField disabled label="Start Time" variant="filled" />
-                  <TextField disabled label="End Time" variant="filled" />
+                  <TextField
+                    disabled
+                    label="Start Time"
+                    variant="filled"
+                    defaultValue="-"
+                  />
+                  <TextField
+                    disabled
+                    label="End Time"
+                    variant="filled"
+                    defaultValue="-"
+                  />
                 </TimeGrid>
               </GridRow>
 
@@ -107,9 +129,14 @@ export function InspectionDetail() {
                   disabled
                   label="Level"
                   variant="filled"
-                  value={data.level}
+                  defaultValue={data.level}
                 />
-                <TextField disabled label="Facility" variant="filled" />
+                <TextField
+                  disabled
+                  label="Facility"
+                  variant="filled"
+                  defaultValue="-"
+                />
               </GridRow>
 
               <GridRow>
@@ -117,13 +144,13 @@ export function InspectionDetail() {
                   disabled
                   label="HM Inspection"
                   variant="filled"
-                  value={data.hmInspection}
+                  defaultValue={data.hmInspection}
                 />
                 <TextField
                   disabled
                   label="Hazmat Placard Required"
                   variant="filled"
-                  value={data.placarableHmVehInsp}
+                  defaultValue={data.placarableHmVehInsp}
                 />
               </GridRow>
             </FormSection>

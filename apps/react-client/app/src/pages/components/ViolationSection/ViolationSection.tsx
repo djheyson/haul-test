@@ -17,6 +17,7 @@ interface ViolationSectionProps {
 
 export const ViolationSection = ({ violations }: ViolationSectionProps) => {
   if (!violations?.length) return null;
+  console.log(violations);
 
   return (
     <Box>
