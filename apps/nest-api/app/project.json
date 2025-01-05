@@ -35,7 +35,8 @@
     },
     "test": {
       "options": {
-        "passWithNoTests": true
+        "passWithNoTests": true,
+        "coverage": true
       }
     },
     "deploy": {

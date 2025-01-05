@@ -3,6 +3,12 @@
   "projectType": "application",
   "sourceRoot": "apps/react-client/app/src",
   "targets": {
+    "test": {
+      "options": {
+        "passWithNoTests": true,
+        "coverage": true
+      }
+    },
     "deploy": {
       "executor": "nx:run-commands",
       "options": {
