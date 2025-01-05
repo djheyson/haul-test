@@ -9,11 +9,17 @@ describe('VehicleService', () => {
   let service: VehicleService;
 
   beforeEach(async () => {
+    process.env.VIN_API_URL = 'http://test-api';
     const module = await Test.createTestingModule({
       providers: [VehicleService],
     }).compile();
 
     service = module.get<VehicleService>(VehicleService);
+  });
+
+  afterEach(() => {
+    delete process.env.VIN_API_URL;
+    jest.clearAllMocks();
   });
 
   describe('decodeVin', () => {
@@ -60,10 +66,13 @@ describe('VehicleService', () => {
     });
 
     it('should return null when API call fails', async () => {
+      const consoleSpy = jest.spyOn(console, 'error').mockImplementation();
       mockedAxios.get.mockRejectedValueOnce(new Error('API Error'));
 
       const result = await service.decodeVin('INVALID_VIN');
       expect(result).toBeNull();
+
+      consoleSpy.mockRestore();
     });
   });
 

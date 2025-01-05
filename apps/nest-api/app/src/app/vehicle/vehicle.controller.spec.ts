@@ -7,9 +7,10 @@ describe('VehicleController', () => {
   let controller: VehicleController;
   let vehicleService: VehicleService;
   let inspectionService: InspectionService;
+  let module: TestingModule;
 
   beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
+    module = await Test.createTestingModule({
       controllers: [VehicleController],
       providers: [
         {
@@ -20,13 +21,22 @@ describe('VehicleController', () => {
             getLinkedEquipment: jest.fn(),
           },
         },
-        { provide: InspectionService, useValue: { getCachedData: jest.fn() } },
+        {
+          provide: InspectionService,
+          useValue: {
+            getCachedData: jest.fn(),
+          },
+        },
       ],
     }).compile();
 
     controller = module.get<VehicleController>(VehicleController);
     vehicleService = module.get<VehicleService>(VehicleService);
     inspectionService = module.get<InspectionService>(InspectionService);
+  });
+
+  afterEach(async () => {
+    await module.close();
   });
 
   describe('getVehicleInfo', () => {
