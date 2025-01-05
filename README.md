@@ -2,7 +2,7 @@
 
 A modern web application built with Nx, NestJS, and React for managing trucking inspections data. The system provides a comprehensive view of inspection records, vehicle information, and compliance data.
 
-🚀 [Live Demo](https://react-client-three-orcin.vercel.app/)
+🚀 [Live Demo](https://react-client-three-orcin.vercel.app)
 
 ## Coverage
 
