@@ -1,6 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { InspectionController } from './inspection.controller';
-import { InspectionService } from './inspection.service';
+import {
+  InspectionService,
+  ResponseGetInspection,
+  ResponseGetInspections,
+} from './inspection.service';
 import axios from 'axios';
 jest.mock('axios');
 
@@ -32,8 +36,8 @@ describe('InspectionController', () => {
   });
 
   describe('getInspections', () => {
-    it('should return paginated inspections', async () => {
-      const mockResponse = {
+    it('should get inspections with default pagination', async () => {
+      const mockResponse: ResponseGetInspections = {
         items: [],
         total: 0,
         allBasics: [],
@@ -43,39 +47,109 @@ describe('InspectionController', () => {
 
       jest
         .spyOn(inspectionService, 'getInspections')
-        .mockResolvedValue(mockResponse);
+        .mockResolvedValueOnce(mockResponse);
 
-      const result = await inspectionController.getInspections(1, 25, {
-        sort: [{ field: 'inspectionDate', sort: 'desc' }],
-      });
+      const result = await inspectionController.getInspections();
 
+      expect(inspectionService.getInspections).toHaveBeenCalledWith(
+        0,
+        100,
+        undefined
+      );
+      expect(result).toEqual(mockResponse);
+    });
+
+    it('should get inspections with custom pagination', async () => {
+      const mockResponse: ResponseGetInspections = {
+        items: [],
+        total: 0,
+        allBasics: [],
+        allStatus: [],
+        allAssignedTo: [],
+      };
+
+      jest
+        .spyOn(inspectionService, 'getInspections')
+        .mockResolvedValueOnce(mockResponse);
+
+      const result = await inspectionController.getInspections(2, 50);
+
+      expect(inspectionService.getInspections).toHaveBeenCalledWith(
+        2,
+        50,
+        undefined
+      );
+      expect(result).toEqual(mockResponse);
+    });
+
+    it('should get inspections with filters', async () => {
+      const mockFilters = {
+        status: 'COMPLETED',
+        date: '2023-01-01',
+      };
+
+      const mockResponse: ResponseGetInspections = {
+        items: [],
+        total: 0,
+        allBasics: [],
+        allStatus: [],
+        allAssignedTo: [],
+      };
+
+      jest
+        .spyOn(inspectionService, 'getInspections')
+        .mockResolvedValueOnce(mockResponse);
+
+      const result = await inspectionController.getInspections(
+        0,
+        100,
+        mockFilters
+      );
+
+      expect(inspectionService.getInspections).toHaveBeenCalledWith(
+        0,
+        100,
+        mockFilters
+      );
       expect(result).toEqual(mockResponse);
     });
   });
 
   describe('getInspection', () => {
-    it('should return a single inspection', async () => {
-      const mockInspection = {
-        id: '123',
-        inspectionDate: '2024-01-01',
-        reportState: 'CA',
-        reportNumber: 'ABC123',
+    it('should get a single inspection by report number', async () => {
+      const mockResponse: ResponseGetInspection = {
+        id: '1',
+        inspectionDate: '2023-01-01',
+        reportState: 'COMPLETED',
+        reportNumber: '12345',
         level: '1',
         timeWeight: '1',
-        placarableHmVehInsp: 'N',
-        hmInspection: 'N',
+        placarableHmVehInsp: '1',
+        hmInspection: '1',
         vehicles: [],
         violations: [],
         metadata: {},
-        status: { key: 'no-violation', value: 'No Violation' },
+        status: { key: 'COMPLETED', value: 'COMPLETED' },
       };
 
       jest
         .spyOn(inspectionService, 'getInspection')
-        .mockResolvedValue(mockInspection);
+        .mockResolvedValueOnce(mockResponse);
 
-      const result = await inspectionController.getInspection('ABC123');
-      expect(result).toEqual(mockInspection);
+      const result = await inspectionController.getInspection('12345');
+
+      expect(inspectionService.getInspection).toHaveBeenCalledWith('12345');
+      expect(result).toEqual(mockResponse);
+    });
+
+    it('should handle non-existent report number', async () => {
+      jest
+        .spyOn(inspectionService, 'getInspection')
+        .mockRejectedValueOnce(new Error('Inspection not found'));
+
+      await expect(
+        inspectionController.getInspection('non-existent')
+      ).rejects.toThrow('Inspection not found');
     });
   });
 
@@ -98,6 +172,59 @@ describe('InspectionController', () => {
         isLastPart: 'true',
       });
       expect(result).toEqual(mockResponse);
+    });
+
+    it('should handle invalid part number error', async () => {
+      const mockFile = {
+        buffer: Buffer.from('test'),
+        originalname: 'test.xml',
+      } as any;
+
+      await expect(
+        inspectionController.uploadFile(mockFile, {
+          fileId: '123',
+          partNumber: '3',
+          totalParts: '3',
+          isLastPart: 'false',
+        })
+      ).rejects.toThrow('Invalid part number: 3 of 3');
+    });
+
+    it('should successfully handle complete file upload', async () => {
+      const mockFile = {
+        buffer: Buffer.from('test'),
+        originalname: 'test.xml',
+      } as any;
+
+      jest
+        .spyOn(inspectionService, 'loadDataFromUpload')
+        .mockResolvedValueOnce({ success: true } as any);
+
+      await inspectionController.uploadFile(mockFile, {
+        fileId: '123',
+        partNumber: '0',
+        totalParts: '2',
+        isLastPart: 'false',
+      });
+
+      const result = await inspectionController.uploadFile(mockFile, {
+        fileId: '123',
+        partNumber: '1',
+        totalParts: '2',
+        isLastPart: 'true',
+      });
+
+      expect(result).toEqual({ success: true });
+    });
+
+    beforeEach(() => {
+      jest.clearAllMocks();
+      (inspectionController as any).fileChunks = new Map<string, Buffer[]>();
+    });
+
+    afterEach(() => {
+      jest.clearAllMocks();
+      (inspectionController as any).fileChunks.clear();
     });
   });
 

@@ -77,7 +77,7 @@ export class InspectionController {
         .map((chunk, index) => (chunk ? null : index))
         .filter((index) => index !== null);
 
-      if (missingParts.length > 0) {
+      if (missingParts?.length > 0) {
         throw new Error(`Missing parts: ${missingParts.join(', ')}`);
       }
 

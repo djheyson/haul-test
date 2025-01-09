@@ -103,7 +103,7 @@ export class InspectionService {
       ? rawData.map(this.transformInspection)
       : [this.transformInspection(rawData)];
 
-    return { message: `Loaded ${this.cachedData.length} inspections` };
+    return { message: `Loaded ${this.cachedData?.length} inspections` };
   }
 
   private transformInspection(rawInspection: any): InspectionData {
@@ -138,7 +138,7 @@ export class InspectionService {
       }));
 
     const getStatus = (violations: Violation[]) => {
-      if (!violations || violations.length === 0) {
+      if (!violations || violations?.length === 0) {
         return { key: 'no-violation', value: 'No Violation' };
       }
 
@@ -192,7 +192,7 @@ export class InspectionService {
       });
     });
 
-    if (filters.sort?.length) {
+    if (filters?.sort?.length) {
       filteredData.sort((a, b) => {
         for (const { field, sort } of filters?.sort || []) {
           // Handle nested violation fields
@@ -257,10 +257,10 @@ export class InspectionService {
       new Set(this.cachedData.map((inspection) => inspection.status.key))
     ) as string[];
 
-    if (!this.cachedData.length) return null;
+    if (!this.cachedData?.length) return null;
     return {
       items: filteredData.slice(start, end),
-      total: filteredData.length,
+      total: filteredData?.length,
       allBasics,
       allStatus,
       allAssignedTo: [],
