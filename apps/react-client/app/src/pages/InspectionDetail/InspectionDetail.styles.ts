@@ -14,6 +14,7 @@ export const MainContent = styled(Box)({
   gridTemplateColumns: '1fr 400px',
   overflow: 'hidden',
   height: '100%',
+  gap: 24,
 });
 
 export const ContentContainer = styled(Box)({
@@ -21,7 +22,7 @@ export const ContentContainer = styled(Box)({
   flexDirection: 'column',
   gap: 24,
   overflow: 'auto',
-  padding: '16px',
+  padding: 2,
 });
 
 export const FormSection = styled(Box)({

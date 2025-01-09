@@ -6,7 +6,7 @@ import { DashboardContainer, ContentBox } from './Dashboard.styles';
 export function DashboardLayout() {
   return (
     <MuiDashboardLayout sidebarExpandedWidth={200}>
-      <DashboardContainer>
+      <DashboardContainer maxWidth={false}>
         <PageHeader />
         <ContentBox>
           <Outlet />
